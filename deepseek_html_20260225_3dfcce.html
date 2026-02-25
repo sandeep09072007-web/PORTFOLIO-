@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sandeep P · Cloud Student Portfolio</title>
+  <style>
+    /* ========== GLOBAL RESET & VARIABLES ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: #f8faff;  /* soft white-blue background */
+      color: #1e2b3c;
+      line-height: 1.6;
+      scroll-behavior: smooth;    /* native smooth scroll (enhanced with JS) */
+    }
+
+    /* blue and white theme */
+    :root {
+      --primary-blue: #2563eb;
+      --deep-blue: #1e3a8a;
+      --light-blue: #dbeafe;
+      --white: #ffffff;
+      --off-white: #f0f4fc;
+      --gray: #475569;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--primary-blue);
+      transition: 0.2s;
+    }
+
+    /* ========== NAVBAR ========== */
+    .navbar {
+      background-color: var(--white);
+      padding: 1rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      box-shadow: 0 8px 20px rgba(0, 40, 120, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 2px solid var(--light-blue);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--deep-blue);
+      letter-spacing: -0.5px;
+    }
+    .logo span {
+      color: var(--primary-blue);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-links a {
+      font-weight: 500;
+      color: #2c3e50;
+      padding: 0.5rem 0.2rem;
+      border-bottom: 2px solid transparent;
+    }
+    .nav-links a:hover {
+      border-bottom-color: var(--primary-blue);
+      color: var(--primary-blue);
+    }
+
+    /* mobile menu button */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: 2px solid var(--light-blue);
+      border-radius: 12px;
+      padding: 0.5rem 1rem;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--primary-blue);
+      font-weight: 600;
+    }
+
+    /* ========== SECTIONS COMMON ========== */
+    section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .section-title {
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: var(--deep-blue);
+      margin-bottom: 2.5rem;
+      position: relative;
+      display: inline-block;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 70px;
+      height: 4px;
+      background: var(--primary-blue);
+      border-radius: 4px;
+    }
+
+    /* profile placeholder */
+    .profile-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--light-blue), #b3d0ff);
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 5px solid var(--white);
+      box-shadow: 0 15px 25px rgba(37,99,235,0.2);
+    }
+    .profile-circle svg {
+      width: 90px;
+      height: 90px;
+      fill: var(--deep-blue);
+      opacity: 0.8;
+    }
+
+    /* cards for projects */
+    .projects-grid, .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .skill-card, .project-card {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 1.8rem 1.5rem;
+      box-shadow: 0 12px 30px rgba(0, 60, 130, 0.06);
+      transition: all 0.25s ease;
+      border: 1px solid rgba(37,99,235,0.1);
+    }
+    .skill-card:hover, .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 25px 35px -8px rgba(37,99,235,0.15);
+      border-color: var(--light-blue);
+    }
+
+    .skill-card h3 {
+      color: var(--deep-blue);
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+    }
+    .skill-tag {
+      display: inline-block;
+      background: var(--light-blue);
+      color: var(--deep-blue);
+      font-weight: 500;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      margin: 0.3rem 0.3rem 0 0;
+      font-size: 0.9rem;
+    }
+
+    .project-card h3 {
+      font-size: 1.6rem;
+      color: var(--deep-blue);
+    }
+    .project-card p {
+      color: var(--gray);
+      margin: 0.8rem 0 1.5rem;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      background: white;
+      border: 2px solid var(--light-blue);
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s;
+      color: var(--deep-blue);
+    }
+    .btn-primary {
+      background: var(--primary-blue);
+      border-color: var(--primary-blue);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: var(--deep-blue);
+      border-color: var(--deep-blue);
+    }
+    .btn-outline:hover {
+      background: var(--light-blue);
+    }
+
+    /* contact & footer */
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin: 2rem 0 1rem;
+      font-size: 1.2rem;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--white);
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      box-shadow: 0 5px 12px #e2ebff;
+    }
+    .contact-item i { font-style: normal; font-weight: 600; }
+
+    footer {
+      background: var(--deep-blue);
+      color: #dbeafe;
+      text-align: center;
+      padding: 2rem;
+      font-size: 1.1rem;
+      border-top: 6px solid var(--primary-blue);
+    }
+
+    /* responsive */
+    @media screen and (max-width: 768px) {
+      .navbar {
+        padding: 0.8rem 5%;
+      }
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        gap: 0.2rem;
+        background: var(--white);
+        padding: 1.5rem 0;
+        border-radius: 0 0 30px 30px;
+        box-shadow: 0 20px 25px -10px rgba(0,0,0,0.1);
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-block;
+      }
+      .section-title {
+        font-size: 2rem;
+      }
+      .profile-circle {
+        width: 120px;
+        height: 120px;
+      }
+      .profile-circle svg {
+        width: 70px;
+        height: 70px;
+      }
+    }
+
+    /* tiny animation class used by js */
+    .fade-up {
+      animation: fadeUp 0.8s ease forwards;
+    }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- ========== NAVIGATION ========== -->
+  <nav class="navbar">
+    <div class="logo">Sandeep<span>.</span></div>
+    <button class="menu-toggle" id="menuToggle" aria-label="menu">☰ Menu</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ========== HOME SECTION ========== -->
+  <section id="home">
+    <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+      <div class="profile-circle">
+        <!-- simple SVG placeholder for profile photo -->
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="45" r="25" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+          <circle cx="50" cy="40" r="8" fill="#a5c9ff"/>
+          <path d="M30 70 Q50 85,70 70" stroke="#2563eb" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <circle cx="38" cy="38" r="2.5" fill="#1e3a8a"/>
+          <circle cx="62" cy="38" r="2.5" fill="#1e3a8a"/>
+        </svg>
+      </div>
+      <h1 style="font-size: 3rem; color: var(--deep-blue); margin-bottom: 0.5rem;">Sandeep P</h1>
+      <p style="font-size: 1.8rem; font-weight: 300; color: var(--primary-blue);">BCA Cloud Computing</p>
+      <p style="font-size: 1.3rem; margin-top: 1.2rem; color: #36454F;">Welcome to my student portfolio – passionate about cloud, code, and innovation. ☁️</p>
+    </div>
+  </section>
+
+  <!-- ========== ABOUT ME ========== -->
+  <section id="about" style="background-color: var(--off-white); border-radius: 60px 60px 0 0;">
+    <h2 class="section-title">About Me</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
+      <div style="flex: 1; min-width: 280px;">
+        <p style="font-size: 1.3rem; margin-bottom: 1rem;">Hey, I'm Sandeep – a <strong>BCA Cloud Computing</strong> student at Kristu Jayanti University.</p>
+        <p style="color: var(--gray);">I'm deeply fascinated by how cloud technologies reshape businesses. I love experimenting with distributed systems, building full‑stack apps, and contributing to open source. When not studying, I explore AWS, Linux, and modern web frameworks.</p>
+        <p style="margin-top: 1rem;">🎯 Goal: become a cloud solutions architect & developer advocate.</p>
+      </div>
+      <div style="flex: 0 0 180px; text-align: center;">
+        <div style="background: var(--light-blue); border-radius: 40px; padding: 1.5rem 1rem;">
+          <span style="font-size: 3rem;">☁️</span>
+          <p style="font-weight: 600;">cloud native</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SKILLS SECTION ========== -->
+  <section id="skills">
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card"><h3>Languages</h3><div><span class="skill-tag">Python</span><span class="skill-tag">JavaScript</span><span class="skill-tag">Java</span><span class="skill-tag">SQL</span></div></div>
+      <div class="skill-card"><h3>Web</h3><div><span class="skill-tag">HTML5</span><span class="skill-tag">CSS3</span><span class="skill-tag">React</span><span class="skill-tag">Node.js</span></div></div>
+      <div class="skill-card"><h3>Cloud & infra</h3><div><span class="skill-tag">AWS (EC2, S3)</span><span class="skill-tag">Docker</span><span class="skill-tag">Linux</span><span class="skill-tag">Networking</span><span class="skill-tag">VMware</span></div></div>
+      <div class="skill-card"><h3>Tools</h3><div><span class="skill-tag">Git & GitHub</span><span class="skill-tag">VS Code</span><span class="skill-tag">Postman</span><span class="skill-tag">Figma</span></div></div>
+    </div>
+  </section>
+
+  <!-- ========== PROJECTS SECTION ========== -->
+  <section id="projects" style="background-color: var(--off-white); border-radius: 50px 50px 0 0;">
+    <h2 class="section-title">Sample Projects</h2>
+    <div class="projects-grid">
+      <!-- project 1 -->
+      <div class="project-card">
+        <h3>☁️ Cloud File Manager</h3>
+        <p>Mini AWS S3-like storage with Flask, boto3, and user authentication. Supports upload, share, and folder view.</p>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="alert('🔗 Demo link (simulated)')">View Demo</button>
+          <button class="btn btn-outline" onclick="window.open('https://github.com/sandeepcloud', '_blank')">GitHub</button>
+        </div>
+      </div>
+      <!-- project 2 -->
+      <div class="project-card">
+        <h3>📊 Network Monitor</h3>
+        <p>Python tool with psutil & matplotlib to visualize real‑time bandwidth. Deployed on a lightweight cloud VM.</p>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="alert('🚀 Live demo would open.')">View Demo</button>
+          <button class="btn btn-outline" onclick="window.open('https://github.com/sandeepcloud', '_blank')">GitHub</button>
+        </div>
+      </div>
+      <!-- project 3 -->
+      <div class="project-card">
+        <h3>📝 Student Hub (MERN)</h3>
+        <p>Full‑stack student dashboard with task management & cloud deployment notes. (MongoDB, Express, React, Node)</p>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="alert('✨ demo under construction')">View Demo</button>
+          <button class="btn btn-outline" onclick="window.open('https://github.com/sandeepcloud', '_blank')">GitHub</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EDUCATION ========== -->
+  <section id="education">
+    <h2 class="section-title">Education</h2>
+    <div style="background: var(--white); border-radius: 30px; padding: 2rem; box-shadow: 0 8px 18px #d4e2fc;">
+      <p style="font-size: 2rem; font-weight: 700; color: var(--deep-blue);">Kristu Jayanti University</p>
+      <p style="font-size: 1.5rem; color: var(--primary-blue); margin: 0.5rem 0;">Bachelor of Computer Applications (BCA)</p>
+      <p style="font-size: 1.2rem; color: #3f506e;"><strong>Specialization:</strong> Cloud Computing</p>
+      <p style="margin-top: 1rem;">📅 2022 – 2025 (expected) · Bangalore, India</p>
+      <p>🏅 Cloud Club coordinator · AWS Academy member · 3rd semester merit</p>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT SECTION ========== -->
+  <section id="contact" style="background: linear-gradient(120deg, #ecf3ff, white);">
+    <h2 class="section-title">Contact</h2>
+    <div class="contact-links">
+      <div class="contact-item"><i>📧</i> sandeep.p@kjstudent.edu.in</div>
+      <div class="contact-item"><i>📱</i> +91 98765 43210</div>
+    </div>
+    <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin: 2rem 0;">
+      <a href="#" style="background: #1e3a8a; color: white; padding: 0.7rem 1.8rem; border-radius: 50px;">🔗 LinkedIn</a>
+      <a href="#" style="background: #0a0a0a; color: white; padding: 0.7rem 1.8rem; border-radius: 50px;">🐙 GitHub</a>
+      <a href="#" style="background: #1d9bf0; color: white; padding: 0.7rem 1.8rem; border-radius: 50px;">🐦 X (Twitter)</a>
+    </div>
+    <p style="text-align: center; color: var(--gray);">or say hello via social media ⚡</p>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <p>© 2025 Sandeep P – Kristu Jayanti University. All rights reserved.</p>
+    <p style="margin-top: 0.8rem; font-size: 0.95rem;">Built with 💙 HTML/CSS/JS (single‑file portfolio)</p>
+  </footer>
+
+  <!-- ========== JAVASCRIPT (internal, with smooth scroll & animations) ========== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ---------- Mobile menu toggle ----------
+      const menuToggle = document.getElementById('menuToggle');
+      const navLinks = document.getElementById('navLinks');
+
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+          navLinks.classList.toggle('active');
+        });
+
+        // close menu when clicking any nav link (optional)
+        navLinks.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', (e) => {
+            // smooth scroll to section manually (prevents default jump)
+            e.preventDefault();
+            const targetId = link.getAttribute('href'); // #home, #about...
+            if (targetId && targetId.startsWith('#')) {
+              const targetEl = document.querySelector(targetId);
+              if (targetEl) {
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }
+            // if mobile menu open, close it
+            if (navLinks.classList.contains('active')) {
+              navLinks.classList.remove('active');
+            }
+          });
+        });
+      }
+
+      // ---------- Smooth scroll for all anchor links (additional fallback) ----------
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === "#" || href === "") return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();          // avoid jump
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      // ---------- Fade-up animation on scroll using IntersectionObserver ----------
+      const sections = document.querySelectorAll('section');
+      const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px 0px -20px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-up');
+            // you can unobserve after first animation to reduce load
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      sections.forEach(section => {
+        section.classList.remove('fade-up'); // start invisible (via CSS? but we control)
+        // set initial opacity? we'll just use observer to add class.
+        // ensure sections are slightly transparent? We'll define a base style if needed.
+        section.style.opacity = '0';
+        observer.observe(section);
+      });
+
+      // minor: add fade-up class also sets opacity:1 via keyframe.
+      // manually trigger for home if already visible
+      window.addEventListener('load', () => {
+        sections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 100) {
+            section.classList.add('fade-up');
+            observer.unobserve(section);
+          }
+        });
+      });
+
+      // (optional) manually set some cards animation on project click? only buttons.
+    })();
+  </script>
+
+  <!-- tiny extra style for initial opacity & animation (to work with JS) -->
+  <style>
+    section { opacity: 0; transition: opacity 0.2s; } /* hidden until animated */
+    section.fade-up { opacity: 1; } /* animation keyframe already sets opacity */
+  </style>
+</body>
+</html>
